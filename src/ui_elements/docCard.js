@@ -7,10 +7,11 @@ export class DocCard extends HTMLElement {
         const description = this.innerText.trim();
         const logoSrc = this.getAttribute("logo-src") || `assets/images/logos/${this.id}.png`;
 
+        const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
         // Create the card HTML
         this.innerHTML = `
             <div class="relative group card bg-slate-900/30 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700 transform hover:scale-[1.02] transition-all duration-300 flex flex-col overflow-hidden cursor-pointer"
-                onclick="window.location.href = \`${window.location.origin}/${this.id}.html\`;">
+                onclick="window.location.href = \`${this.id}.html\`;">
                 
                 <!-- Logo Section -->
                 <div class="text-center mb-6 p-6 pb-0">
