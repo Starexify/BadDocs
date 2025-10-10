@@ -9,7 +9,7 @@ export class CodeBlock extends HTMLElement {
 
         // Create wrapper for line numbers and code
         const codeWrapper = document.createElement('div');
-        codeWrapper.className = 'flex overflow-x-auto';
+        codeWrapper.className = 'flex overflow-x-auto text-sm md:text-base';
 
         // Create line numbers container
         const lineNumbers = document.createElement('div');
