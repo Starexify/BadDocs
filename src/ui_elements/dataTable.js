@@ -22,8 +22,8 @@ export class DataTable extends HTMLElement {
         }
 
         this.innerHTML = `
-            <div class="overflow-x-auto">
-                <div class="rounded-lg border border-slate-700 overflow-hidden inline-block max-w-full">
+            <div class="overflow-x-auto w-full">
+                <div class="rounded-lg border border-slate-700 overflow-hidden inline-block min-w-full">
                     <table class="table-auto w-full text-sm md:text-base text-left">
                         <thead>
                             <tr class="bg-slate-900/90">
