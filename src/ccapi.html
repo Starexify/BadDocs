@@ -75,7 +75,138 @@
             id: 'getting-started',
             title: 'Getting Started',
             content: `<div class="flex flex-col gap-5">
-WIP
+<p class="text-3xl font-bold mb-2">Understanding Custom Controls API</p>
+
+<p class="text-2xl font-bold -ml-2">What is Custom Controls API ?</p>
+<p class="mb-4"><strong>CCAPI</strong><i> (short for Custom Controls API)</i> is an <strong>API</strong> for V-Slice mods, that allows modders to easily create and manage their own keybinds
+inside the Controls page from the Options menu.</p>
+
+<p class="text-2xl font-bold -ml-2">How does it work ?</p>
+<p class="mb-4"><strong>CCAPI</strong> works by rebuilding the entire entries of the already existing Controls page while injecting the custom added ones at the same time when opening the Options state.</p>
+</div>`,
+            subsections: []
+        },
+        {
+            id: 'setup',
+            title: 'Setting up Custom Controls',
+            content: `<div class="flex flex-col gap-5">
+<p class="text-2xl font-bold -ml-2">Installation</p>
+<p>
+ To use <strong>CCAPI</strong> in your project, make sure it is installed as a <strong>mod</strong> inside your Friday Night Funkin' mods folder.
+ Custom Controls API should be placed alongside your other mods so that it can add the custom controls for all mods.
+</p>
+<p>You can download CCAPI from:</p>
+<ul class="list-disc ml-6 font-bold">
+  <li><doc-link href="https://github.com/Starexify/CustomControlsAPI">Official GitHub Repo</doc-link></li>
+  <li><doc-link href="https://gamebanana.com/mods/626069">Official GameBanana Page</doc-link></li>
+</ul>
+<p class="mb-4">After installing, verify that CCAPI loads correctly before attempting to register any control or keybind.</p>
+</div>`,
+            subsections: []
+        },
+        {
+            id: 'classes',
+            title: 'Classes',
+            content: `<note-block text="Info">For more information about the classes check the source code from the <doc-link href="https://github.com/Starexify/CustomControlsAPI">GitHub Repo</doc-link></note-block>`,
+            subsections: [
+                {
+                    id: 'controls-api',
+                    title: 'ControlsAPI',
+                    content: `<div class="flex flex-col gap-3">
+<p>Controls API is the class for creating, modifying and managing custom control entries within the <strong>Controls Page</strong>.</p>
+<p>It exposes the following API methods:</p>
+<data-table class="mb-4"
+    data-headers="Method,Parameters,Description"
+    data-json='[
+        ["registerKeybind()", "name, keys, ?header, ?inputTypes, ?index, ?spritePath", "Registers a new custom keybind entry."],
+        ["registerHeader()", "name, ?index, ?centered, ?font", "Adds a new header section to the controls menu."],
+        ["unregisterKeybind()", "name", "Removes a registered keybind by name."],
+        ["unregisterHeader()", "name", "Removes a registered header by name."],
+        ["readdBaseEntry()", "name, control", "Restores a previously removed base control entry."],
+        ["removeBaseEntry()", "name, control, ?storeKeys, ?device", "Removes a base control entry and optionally stores its keybind data."]
+    ]'>
+</data-table>
+
+<note-block class="block mt-2 mb-5">See <doc-link href="#input-types" target-off>Input Types</doc-link> for valid input type values.</note-block>
+</div>`
+                },
+                {
+                    id: 'controls-manager',
+                    title: 'ControlsManager',
+                    content: `<div class="flex flex-col gap-3">
+<p><strong>ControlsManager</strong> is the runtime class responsible for processing input events from all registered <code-field>ControlSlot</code-field>s. It manages press and release queues, maps input keys to actions, and dispatches callbacks when specific input types are triggered. This class works alongside <doc-link href="#classes:controls-api" target-off>ControlsAPI</doc-link> to handle the input actions of the custom controls.</p>
+<p>Automatically tracking pressed, just pressed, released, and just released states for each keybind, and provides a simple callback registration system for mods to fire logic when the key was pressed.</p>
+<p>It exposes the following API methods:</p>
+<data-table class="mb-4"
+  data-headers="Method,Parameters,Description"
+  data-json='[
+          ["registerCallback()", "controlName, inputType, callback", "Registers a callback to be executed when a specific control and input type is triggered. The callback receives the pressed key code as an argument."]
+  ]'>
+</data-table>
+
+<note-block class="block mt-2 mb-5">See <doc-link href="#input-types" target-off>Input Types</doc-link> for valid input type values.</note-block>
+</div>`
+                }
+            ]
+        },
+        {
+            id: 'input-types',
+            title: 'Input Types',
+            content: `<div class="flex flex-col gap-3">
+<p class="mb-4">Input Types define the specific key state that triggers an action or callback in the <doc-link href="#classes:controls-manager" target-off>ControlsManager</doc-link>. These determine whether the event should occur when a key is first pressed, held, released, or just released.</p>
+
+<p>Supported values:</p>
+<data-table class="mb-4"
+    data-headers="Constant,String Aliases,Description"
+    data-json='[
+        ["JUST_RELEASED (-1)", "justreleased, just_released", "Triggered once when a key is released after being pressed."],
+        ["RELEASED (0)", "released", "Active while a key remains released (not pressed)."],
+        ["PRESSED (1)", "pressed", "Active while a key is being held down."],
+        ["JUST_PRESSED (2)", "justpressed, just_pressed", "Triggered once when a key is first pressed."]
+    ]'>
+</data-table>
+
+<note-block class="block mt-2 mb-5">Input type strings are <strong>case-insensitive</strong>, so for example, both <code-field>justpressed</code-field> and <code-field>JUST_PRESSED</code-field> are valid.</note-block>
+</div>`,
+            subsections: []
+        },
+        {
+            id: 'examples',
+            title: 'Example API Usage',
+            content: `<div class="flex flex-col gap-3">
+<note-block class="block mt-2 mb-5">See <doc-link href="#input-types" target-off>Input Types</doc-link> for valid input type values.</note-block>
+
+<h4 class="text-2xl font-bold -ml-2">Registering a Keybind</h4>
+<p>Register a new custom keybind entry that can later be used in <doc-link href="#classes:controls-manager" target-off>ControlsManager</doc-link> callbacks.</p>
+<code-block>
+override public function onCreate(event:ScriptEvent) {
+  ControlsAPI.instance.registerKeybind("Dodge", [32, 0], "NOTES", ["justPressed", "justReleased"]);
+}
+</code-block>
+
+<h4 class="text-2xl font-bold -ml-2">Registering a Header</h4>
+<p>Add a section header to group controls visually inside the Controls menu.</p>
+<code-block>
+override public function onCreate(event:ScriptEvent) {
+  ControlsAPI.instance.registerHeader("Header", 1);
+}
+</code-block>
+
+<h4 class="text-2xl font-bold -ml-2">Binding a Callback for a Custom Keybind</h4>
+<p>Execute logic when a specific keybind is pressed using <doc-link href="#classes:controls-manager" target-off>ControlsManager</doc-link>.</p>
+<code-block>
+var addedKeyBinds:Bool = false;
+
+override public function onUpdate(event:UpdateScriptEvent) {
+  if (addedKeyBinds) return;
+
+  ControlsManager.registerCallback("Dodge", InputsUtil.JUST_PRESSED, key -> {
+    trace("Just pressed key: " + key);
+  });
+
+  addedKeyBinds = true;
+}
+</code-block>
 </div>`,
             subsections: []
         }

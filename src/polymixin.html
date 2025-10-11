@@ -118,7 +118,8 @@ It replaces or transforms the function declarations (<code-field>FunctionDecl</c
 </p>
 <p>You can download PolyMixin from:</p>
 <ul class="list-disc ml-6 font-bold">
-  <li><doc-link href="https://github.com/Starexify/PolyMixin/tree/main">Official GitHub Repo</doc-link></li>
+  <li><doc-link href="https://github.com/Starexify/PolyMixin">Official GitHub Repo</doc-link></li>
+  <li><doc-link href="https://gamebanana.com/mods/623054">Official GameBanana Page</doc-link></li>
 </ul>
 <p class="mb-4">After installing, verify that PolyMixin loads correctly before attempting to use any mixin features in your own mods.</p>
 
@@ -484,7 +485,7 @@ function newTest() {
                     title: 'PolyMixin',
                     content: `<div class="flex flex-col gap-3">
 <p>PolyMixin is the main class which handles all the transformation related logic, providing helper functions for AST injection which can be used by mods aswell.</p>
-<p>It contains the following API methods:</p>
+<p>It exposes the following API methods:</p>
 <data-table class="mb-4"
     data-headers="Method,Parameters,Description"
     data-json='[
@@ -502,7 +503,7 @@ function newTest() {
                     title: 'MixinAnnotationProcessor',
                     content: `<div class="flex flex-col gap-3">
 <p>The MixinAnnotationProcessor is an API class which can apply all the mixins from a <doc-link href="#examples:mixin-class" target-off>Mixin Class</doc-link> which contains mixin annotations.</p>
-<p>It contains the following API methods:</p>
+<p>It exposes the following API methods:</p>
 <data-table class="mb-4"
     data-headers="Method,Parameters,Description"
     data-json='[
@@ -597,7 +598,7 @@ override public function onCreate(event:ScriptEvent) {
                     title: 'Mixin Classes',
                     content: `<div class="flex flex-col gap-3">
 <p>Mixin Classes are simply classes that can be used to apply transformations into scripted classes via many different methods.</p>
-<p class="text-2xl font-bold -ml-2">Mixin Class Annotations + Configuration</p>
+<h4 class="text-2xl font-bold -ml-2">Mixin Class Annotations + Configuration</h4>
 <p>A class using Mixin Class Annotations looks like:</p>
 <code-block>
 @:Mixin(TargetClass)
@@ -614,7 +615,7 @@ class TargetClassMixin extends ScriptedModule {
 <p>The <code-field>@:Mixin</code-field> field determines the MixinKind (Check <doc-link href="#classes:mixins" target-off>Mixins</doc-link> for more information)</p>
 <p class="mb-4">Then inside the annotation we can have different parameters, first being the target script (<code-field>TargetClass</code-field> in this example), or for <code-field>SongMixin</code-field> we can also have <code-field>variation = "pico"</code-field></p>
 
-<p class="text-2xl font-bold -ml-2">MixinAnnotationProcessor + Annotations</p>
+<h4 class="text-2xl font-bold -ml-2">MixinAnnotationProcessor + Annotations</h4>
 <p>A class using the <doc-link href="#classes:mixin-annotation-proc" target-off>MixinAnnotationProcessor</doc-link> and <doc-link href="#annotations:overwrite" target-off>Annotations</doc-link> looks like:</p>
 <code-block>
 class TargetClassMixin extends ScriptedModule {
@@ -636,7 +637,7 @@ class TargetClassMixin extends ScriptedModule {
 </code-block>
 <p class="mb-4">As you notice, in this example it checks for the injection using a boolean <code-field>onUpdate</code-field> because the classes might not exist which is a bit more tricky than the configuration method.</p>
 
-<p class="text-2xl font-bold -ml-2">PolyMixins</p>
+<h4 class="text-2xl font-bold -ml-2">PolyMixins</h4>
 <p>A class using the <doc-link href="#classes:polymixin" target-off>PolyMixin</doc-link> looks like:</p>
 <code-block>
 class TargetClassMixin extends ScriptedModule {
