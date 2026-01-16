@@ -195,16 +195,10 @@ override public function onCreate(event:ScriptEvent) {
 <h4 class="text-2xl font-bold -ml-2">Binding a Callback for a Custom Keybind</h4>
 <p>Execute logic when a specific keybind is pressed using <doc-link href="#classes:controls-manager" target-off>ControlsManager</doc-link>.</p>
 <code-block>
-var addedKeyBinds:Bool = false;
-
-override public function onUpdate(event:UpdateScriptEvent) {
-  if (addedKeyBinds) return;
-
+override public function onCreate(event:ScriptEvent) {
   ControlsManager.registerCallback("Dodge", InputsUtil.JUST_PRESSED, key -> {
     trace("Just pressed key: " + key);
   });
-
-  addedKeyBinds = true;
 }
 </code-block>
 </div>`,
